@@ -1,18 +1,38 @@
 #!/bin/bash
 
-APP_NAME="TASK TUI"
 
-show_menu() {
-	printf '====== %s ======\n' "$APP_NAME"
+menu_options=(
 
-	printf '%s\n' \
-		"1. Today's Dashboard" \
-		"2. All Tasks" \
-		"3. View Task" \
-		"4. Stopwatch" \
-		"5.	Alarms" \
-		"6. Weekly report" \
-		"7. Exit"
+	"1. Today's Dashboard"
+	"2. Add Task"
+	"3. Edit Task"
+	"4. Delete Task"
+	"5. Exit"
+)
+
+show_dmenu() {
+	printf "%s\n" "${menu_options[@]}" | dmenu -i -p "Select an option:"
 }
 
-show_menu
+choice=$(show_dmenu)
+
+case $choice in
+	"1. Today's Dashboard")
+		echo "Today's Dashboard"
+		;;
+	"2. Add Task")
+		echo "Add Task"
+		;;
+	"3. Edit Task")
+		echo "Edit Task"
+		;;
+	"4. Delete Task")
+		echo "Delete Task"
+		;;
+	"5. Exit")
+		echo "Exiting..."
+		;;
+	*)
+		echo "Invalid option"
+		;;
+esac
