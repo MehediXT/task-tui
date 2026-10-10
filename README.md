@@ -8,22 +8,33 @@ The project is being developed as a hands-on Bash scripting learning project, wi
 
 ## Features
 
-### Planned Features
+### Implemented Features
 
 * [x] Interactive menu using `dmenu`
 * [x] Basic Bash menu and action handling
-* [ ] Add, view, edit, and delete tasks
-* [ ] Mark tasks as completed
-* [ ] Set task priorities and due dates
-* [ ] SQLite database for persistent storage
-* [ ] Today's productivity dashboard
-* [ ] Overdue task tracking
-* [ ] Stopwatch with pause and resume
-* [ ] Task-based time tracking
-* [ ] Scheduled alarms and desktop notifications
-* [ ] Weekly productivity reports
-* [ ] DWM keyboard shortcut integration
-* [ ] Optional DWM status bar integration
+* [x] Add, view, edit, and delete tasks
+* [x] Mark tasks as completed
+* [x] Set task priorities and due dates
+* [x] SQLite database for persistent storage
+* [x] Today's productivity dashboard
+* [x] Overdue task tracking
+* [x] Stopwatch with pause and resume
+* [x] Task-based time tracking
+* [x] Scheduled alarms and desktop notifications
+* [x] Weekly productivity reports
+* [x] DWM keyboard shortcut integration
+* [x] Optional DWM status bar integration
+
+### Future Enhancements
+
+* [ ] Task categories/tags
+* [ ] Export/import tasks (JSON, CSV)
+* [ ] Task search and filtering
+* [ ] Recurring tasks
+* [ ] Task dependencies
+* [ ] Multiple task lists/projects
+* [ ] Data backup and restore
+* [ ] Configuration file for customization
 
 *The checklist reflects development progress and should be updated as features are implemented and tested.*
 
@@ -86,74 +97,151 @@ If you already built `dmenu`, `st`, or DWM from source, use your existing Suckle
 
 ## Installation
 
-### 1. Clone the repository
+### Quick Install
 
-Replace the example URL with your actual Git repository URL.
+Run the installation script:
+
+```bash
+./install.sh
+```
+
+This will:
+- Check for required dependencies
+- Create the data directory
+- Initialize the database
+- Create a launcher in `~/.local/bin/task-tui`
+- Optionally start the alarm worker
+
+### Manual Installation
+
+1. **Clone the repository** (or navigate to your existing directory)
 
 ```bash
 git clone <YOUR_REPOSITORY_URL>
 cd task-tui
 ```
 
-If you are developing locally without a remote repository, simply navigate to your existing project directory.
-
-### 2. Make the script executable
+2. **Install dependencies** (if not already installed)
 
 ```bash
-chmod +x task-tui.sh
+sudo pacman -S bash sqlite libnotify dmenu st
 ```
 
-### 3. Run Task TUI
+3. **Make scripts executable**
+
+```bash
+chmod +x task-tui.sh install.sh scripts/*.sh
+```
+
+4. **Run Task TUI**
 
 ```bash
 ./task-tui.sh
 ```
 
-Alternatively, run it explicitly with Bash:
+Or create a symlink for system-wide access:
 
 ```bash
-bash task-tui.sh
+mkdir -p ~/.local/bin
+ln -sf "$(pwd)/task-tui.sh" ~/.local/bin/task-tui
 ```
+
+### DWM Integration
+
+For DWM keyboard shortcuts and status bar integration, see [DWM_INTEGRATION.md](DWM_INTEGRATION.md)
+
+## Usage
+
+### Launching
+
+Run from the project directory:
+```bash
+./task-tui.sh
+```
+
+Or if installed system-wide:
+```bash
+task-tui
+```
+
+Or with a DWM keyboard shortcut (see [DWM_INTEGRATION.md](DWM_INTEGRATION.md))
+
+### Features
+
+**Task Management**
+- Add new tasks with title, description, priority, and due date
+- Edit existing tasks
+- Mark tasks as completed
+- Delete tasks
+- View all tasks sorted by priority
+
+**Dashboard**
+- See today's tasks at a glance
+- View timer status
+- Check overdue tasks
+- Daily productivity summary
+
+**Time Tracking**
+- Start/stop/pause/resume timer
+- Track time per task or standalone
+- View time spent on completed tasks
+
+**Alarms**
+- Set alarms with date and time
+- Desktop notifications when alarms trigger
+- Background worker monitors alarms continuously
+
+**Reports**
+- Weekly productivity reports
+- Task completion statistics
+- Time tracking summaries
+- Priority breakdown
 
 ## Development
 
-Task TUI is being developed incrementally.
+### Running Tests
 
-The development roadmap is:
+Run the test suite:
 
-1. Build a reliable interactive menu.
-2. Implement task creation and management.
-3. Integrate SQLite for persistent storage.
-4. Build the terminal dashboard.
-5. Implement stopwatch and time tracking.
-6. Add alarms and desktop notifications.
-7. Create weekly productivity reports.
-8. Integrate the application with DWM.
-9. Add tests, error handling, and documentation.
+```bash
+./tests/run_tests.sh
+```
 
-### Syntax checking
+This checks:
+- Dependencies
+- File structure
+- Bash syntax
+- Database operations
+- Task operations
 
-Check the main script for Bash syntax errors without executing it:
+### Syntax Checking
+
+Check scripts for syntax errors:
 
 ```bash
 bash -n task-tui.sh
+bash -n lib/*.sh
+bash -n ui/*.sh
 ```
 
 ### Debugging
 
-Run the script with Bash execution tracing:
+Run with execution tracing:
 
 ```bash
 bash -x task-tui.sh
 ```
 
-### Version control
+### Contributing
 
-Track changes with Git:
+1. Test your changes with `./tests/run_tests.sh`
+2. Check syntax with `bash -n <file>`
+3. Update documentation if needed
+4. Commit with descriptive messages:
 
 ```bash
 git add .
-git commit -m "Describe your changes"
+git commit -m "Add feature: brief description"
 ```
 
 ## Data and Privacy
@@ -190,9 +278,20 @@ This project is also a practical way to learn:
 
 ## Project Status
 
-**Early development**
+**Beta - Feature Complete**
 
-The initial interactive menu is working. Task persistence, the dashboard, stopwatch, alarms, reporting, and desktop integration are planned features that will be implemented incrementally.
+All core features are implemented and tested:
+- ✅ Task management (CRUD operations)
+- ✅ Priority levels and due dates
+- ✅ SQLite database persistence
+- ✅ Interactive dashboard
+- ✅ Timer with pause/resume
+- ✅ Time tracking per task
+- ✅ Alarm system with notifications
+- ✅ Weekly productivity reports
+- ✅ DWM integration ready
+
+The application is functional and ready for daily use. Testing and refinement ongoing.
 
 ## License
 
